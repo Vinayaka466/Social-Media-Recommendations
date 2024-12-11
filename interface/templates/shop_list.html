@@ -1,0 +1,520 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for the navigation bar */
+nav {
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.hero {
+  width: 100%;
+  min-height: 70vh;
+  position: relative;
+  padding: 120px 0 60px 0;
+  display: flex;
+  align-items: center;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: color-mix(in srgb, var(--heading-color), transparent 20%);
+}
+
+.hero p {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  margin: 5px 0 30px 0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.hero .btn-get-started {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-family: var(--heading-font);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 28px 12px 28px;
+  border-radius: 50px;
+  transition: 0.5s;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+}
+
+.hero .btn-get-started:hover {
+  color: var(--contrast-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 15%);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+}
+
+.hero .btn-watch-video {
+  font-size: 16px;
+  transition: 0.5s;
+  margin-left: 25px;
+  color: var(--default-color);
+  font-weight: 600;
+}
+
+.hero .btn-watch-video i {
+  color: var(--accent-color);
+  font-size: 32px;
+  transition: 0.3s;
+  line-height: 0;
+  margin-right: 8px;
+}
+
+.hero .btn-watch-video:hover {
+  color: var(--accent-color);
+}
+
+.hero .btn-watch-video:hover i {
+  color: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
+
+.hero .animated {
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
+}
+
+@media (max-width: 640px) {
+  .hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .hero p {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+
+  .hero .btn-get-started,
+  .hero .btn-watch-video {
+    font-size: 13px;
+  }
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(-10px);
+  }
+}
+#card {
+    padding: 20px; /* Add padding to the container */
+    background-color: hwb(210 97% 2%); /* Light background color for the card container */
+}
+
+#card-row {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(3, 1fr); /* Create 3 equal-width columns */
+    gap: 20px; /* Space between the cards */
+    margin-top: 20px; /* Optional, add top margin if needed */
+}
+
+.card {
+    border-radius: 10px; /* Rounded corners for the cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow around the cards */
+    overflow: hidden; /* Ensure content doesn't overflow the card */
+    background-color: #fff; /* Set a white background for the card */
+}
+
+.card-img-top {
+    width: 100%; /* Make image fill the card width */
+    height: 200px; /* Fixed height for the image */
+    object-fit: cover; /* Crop the image to cover the card */
+}
+
+.card-body {
+    padding: 15px; /* Padding inside the card body */
+    background-color: #ffffff; /* White background for the card body */
+}
+
+.card-title {
+    font-size: 18px; /* Font size for the shop name */
+    font-weight: bold; /* Make the shop name bold */
+    color: #333; /* Dark color for the title */
+    margin-bottom: 10px; /* Add space below the title */
+}
+
+.card-text {
+    font-size: 14px; /* Font size for the description */
+    color: #555; /* Gray color for text */
+}
+
+.btn {
+    width: 100%; /* Make buttons span the full width of the card */
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    color: white; /* White text on buttons */
+    border: none; /* Remove borders from the buttons */
+    text-transform: uppercase; /* Uppercase text */
+    font-weight: bold; /* Make button text bold */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue when hovering */
+}
+
+/* Make the grid responsive for smaller screens */
+@media (max-width: 1024px) {
+    #card-row {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    #card-row {
+        grid-template-columns: 1fr; /* Single column for small screens */
+    }
+}
+.call-to-action {
+  padding: 80px 0;
+  position: relative;
+  clip-path: inset(0);
+}
+
+.call-to-action img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.call-to-action:before {
+  content: "";
+  background: color-mix(in srgb, var(--background-color), transparent 50%);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.call-to-action .container {
+  position: relative;
+  z-index: 3;
+}
+
+.call-to-action h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--default-color);
+}
+
+.call-to-action p {
+  color: var(--default-color);
+}
+
+.call-to-action .cta-btn {
+  font-family: var(--heading-font);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 12px 40px;
+  border-radius: 50px;
+  transition: 0.3s;
+  margin: 10px;
+  border: 2px solid var(--contrast-color);
+  color: var(--contrast-color);
+}
+
+.call-to-action .cta-btn:hover {
+  background: var(--accent-color);
+  border: 2px solid var(--accent-color);
+}
+.footer {
+  color: whitesmoke;
+  background-color: rgb(53, 52, 52);
+  font-size: 14px;
+  padding-bottom: 50px;
+  position: relative;
+}
+
+.footer .footer-top {
+  padding-top: 50px;
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.footer .footer-about .logo {
+  line-height: 1;
+  margin-bottom: 25px;
+}
+
+.footer .footer-about .logo img {
+  max-height: 40px;
+  margin-right: 6px;
+}
+
+.footer .footer-about .logo span {
+  color: var(--heading-color);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: var(--heading-font);
+}
+
+.footer .footer-about p {
+  font-size: 14px;
+  font-family: var(--heading-font);
+}
+
+.footer .social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
+  font-size: 16px;
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.footer .social-links a:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.footer h4 {
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.footer .footer-links {
+  margin-bottom: 30px;
+}
+
+.footer .footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer .footer-links ul i {
+  padding-right: 2px;
+  font-size: 12px;
+  line-height: 0;
+}
+
+.footer .footer-links ul li {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.footer .footer-links ul li:first-child {
+  padding-top: 0;
+}
+
+.footer .footer-links ul a {
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  display: inline-block;
+  line-height: 1;
+}
+
+.footer .footer-links ul a:hover {
+  color: var(--accent-color);
+}
+
+.footer .footer-contact p {
+  margin-bottom: 5px;
+}
+
+.footer .copyright {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background-color: color-mix(in srgb, var(--default-color), transparent 95%);
+}
+
+.footer .copyright p {
+  margin-bottom: 0;
+}
+
+.footer .credits {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+
+
+
+</style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                {% if user.is_authenticated %}
+                <a class="btn btn-outline-success my-2 my-sm-0" style="width: fit-content;"   href="{% url 'logout' %}">Lagout</a>
+                {% else %}
+                <a class="btn btn-outline-success my-2 my-sm-0" style="width: fit-content;" href="{% url 'login' %}">Login</a>
+                {% endif %}
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'shop_list' %}">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'add_shop' %}">UploadShop</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'cantact' %}">CantactUs</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'shop_search' %}">Search</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero section dark-background">
+
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-in">
+              <h1>Your new  experience with this Interface</h1>
+              <p>We are provide best online plotform to find the best shops and otehr thins in the market</p>
+              <div class="d-flex">
+                <a href="{% url 'signup' %}" class="btn-get-started">Register</a>
+              </div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
+              <img src="{%static '/images/hero-img.png'%}"class="img-fluid animated" alt="">
+            </div>
+          </div>
+        </div>
+  
+      </section><!-- /Hero Section -->
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" class="container" style="text-align: center; font-family: Arial Rounded MT Bold ; color: rgb(239, 21, 239);" id = "new">
+        <h5>Recentely Viewd Shops</h5>
+    </div>
+    
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded"id = "card">
+        <div class="row" id="card-row">
+            {% for shop in shops %}
+                <div class="col-md-4" id="col-row">
+                    <div  class="card mb-4" style="width: 18rem;">
+                        <img src="{{ shop.image.url }}" class="card-img-top" alt="{{ shop.shop_name }}" style="height: 300px; object-fit: cover; width: 280px ;">
+                        <div class="card-body">
+                          <br>
+                            <h5 class="card-title" style="text-align: center;">{{ shop.shop_name }}</h5>
+                          <br>
+                            <p class="card-text" style="text-align: center;">
+                                Rating: 
+                            {% with shop.reviews.all|dictsort:"rating"|last as last_review %}
+                                {% if last_review %}
+                                    {{ last_review.rating }} / 5
+                                {% else %}
+                                    No ratings yet
+                                {% endif %}
+                            {% endwith %}
+                            </p>
+                        <a href="{% url 'shop_detail' shop.id %}" class="btn btn-primary">View More</a>
+                            <a href="{% url 'submit_review' shop.id %}" class="btn btn-primary">RateUs</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <section id="call-to-action" class="call-to-action section dark-background">
+
+      <img src="{%static '/images/cta-bg.jpg'%}" alt="">
+
+      <div class="container">
+        <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-xl-10">
+            <div class="text-center">
+              <h3>Call To Action</h3>
+              <p>If you can face any issue OR any forud activities please take a action </p>
+              <a class="cta-btn" href="{% url 'cantact'%}">Call To Action</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Call To Action Section -->
+    <br>
+
+    <footer id="footer" class="footer dark-background">
+
+      <div class="container footer-top">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-about">
+            <a href="shop_list.html.html" class="logo d-flex align-items-center">
+              <span class="sitename">Social Media Interface</span>
+            </a>
+            <p>We are provide best online plotform to find the best shops and otehr thins in the market</p>
+            <div class="social-links d-flex mt-4">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+      </div>
+  
+      <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename" href = "#">Social Media Interface</strong> <span>All Rights Reserved</span></p>
+        <div class="credits">
+          Designed by <a href="#"> Vinay</a>
+        </div>
+      </div>
+  
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+

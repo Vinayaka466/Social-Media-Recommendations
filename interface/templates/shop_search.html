@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #card {
+    padding: 20px; /* Add padding to the container */
+    background-color: hwb(210 97% 2%); /* Light background color for the card container */
+}
+
+#card-row {
+    display: flex; /* Flexbox for aligning the cards */
+    flex-wrap: wrap; /* Allow the cards to wrap when needed */
+    gap: 20px; /* Add space between the cards */
+}
+
+#col-row {
+    display: flex;
+    justify-content: center; /* Center the cards in the column */
+    align-items: flex-start; /* Align items at the top of the column */
+}
+
+.card {
+    border-radius: 10px; /* Rounded corners for the cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow around the cards */
+    overflow: hidden; /* Ensure content doesn't overflow the card */
+}
+
+.card-img-top {
+    width: 100%; /* Make image fill the card width */
+    height: 300px; /* Fixed height for the image */
+    object-fit: cover; /* Crop the image to cover the card */
+}
+
+.card-body {
+    padding: 15px; /* Padding inside the card body */
+    background-color: #ffffff; /* White background for the card body */
+}
+
+.card-title {
+    font-size: 18px; /* Font size for the shop name */
+    font-weight: bold; /* Make the shop name bold */
+    color: #333; /* Dark color for the title */
+    margin-bottom: 10px; /* Add space below the title */
+}
+
+.card-text {
+    font-size: 14px; /* Font size for the description */
+    color: #555; /* Gray color for text */
+}
+
+.btn {
+    width: 100%; /* Make buttons span the full width of the card */
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    color: white; /* White text on buttons */
+    border: none; /* Remove borders from the buttons */
+    text-transform: uppercase; /* Uppercase text */
+    font-weight: bold; /* Make button text bold */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue when hovering */
+}
+
+    </style>
+</head>
+<body>
+    <form method="GET" style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" name="category" placeholder="Category"style="padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+        <input type="text" name="location" placeholder="Location"style="padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+        <button type="submit"style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Search</button>
+    </form>
+    
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" class="container" style="text-align: center; font-family: Arial Rounded MT Bold ; color: rgb(239, 21, 239);" id = "new">
+        <h5>Recentely Viewd Shops</h5>
+    </div>
+    
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded"id = "card">
+        <div class="row" id="card-row">
+            {% for shop in shops %}
+                <div class="col-md-4" id="col-row">
+                    <div  class="card mb-4" style="width: 18rem;">
+                        <img src="{{ shop.image.url }}" class="card-img-top" alt="{{ shop.shop_name }}" style="height: 300px; object-fit: cover; width: 280px ;">
+                        <div class="card-body">
+                          <br>
+                            <h5 class="card-title" style="text-align: center;">{{ shop.shop_name }}</h5>
+                          <br>
+                            <p class="card-text" style="text-align: center;">
+                                Rating: 
+                            {% with shop.reviews.all|dictsort:"rating"|last as last_review %}
+                                {% if last_review %}
+                                    {{ last_review.rating }} / 5
+                                {% else %}
+                                    No ratings yet
+                                {% endif %}
+                            {% endwith %}
+                            </p>
+                        <a href="{% url 'shop_detail' shop.id %}" class="btn btn-primary">View More</a>
+                            <a href="{% url 'submit_review' shop.id %}" class="btn btn-primary">RateUs</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    
+</body>
+</html>
